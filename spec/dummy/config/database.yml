@@ -1,0 +1,12 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: plankbot_dummy_development
+
+test:
+  <<: *default
+  database: plankbot_dummy_test
