@@ -1,0 +1,83 @@
+<div>
+  <div>
+    <h1>Hi! I'm Plankbot</h1>
+    <% unless Plankbot::Setting.is_within_scheduled_shutdown? %>
+      <% if Plankbot::Setting.is_indefinitely_shutdown? %>
+        <h4>(⊙︿⊙✿)</h4>
+        <h4><i>I was shutdown. <%= link_to "Boot me up", bootup_setting_path(1), {method: :put} %></i></h4>
+      <% else %>
+        <h4>(✿◠‿◠)<h4>
+        <h4><i>I am awake. <%= link_to "Shut me down", shutdown_setting_path(1), {method: :put} %></i></h4>
+      <% end %>
+    <% else %>
+      <h4>(￣。￣)～ｚｚｚ</h4>
+      <i>I am currently in a scheduled shutdown</i>
+    <% end %>
+  </div>
+
+  <h2>Pull Requests</h2>
+  <ol>
+    <% @prs.each do |u| %>
+      <% if u.approved? %>
+        <li class="approved-pr">
+          <%= link_to "#{u.title} (by #{u.requestor.name})", u.url %><br>
+          <%= u.labels.map{ |x| "##{x.name}" }.join(" ") %><br>
+          <%= u.reviewers.map{ |x| x.name + (u.pull_request_reviewer_relationships.find_by_reviewer_id(x.id).approved_at ? " ✔" : " —") }.join(" ") %>
+        </li>
+      <% else %>
+        <li class="unapproved-pr">
+          <%= link_to "#{u.title} (by #{u.requestor.name})", u.url %> <%= link_to "edit", edit_pull_request_path(u), {class: "edit"} %><br>
+          <%= u.labels.map{ |x| "##{x.name}" }.join(" ") %><br>
+          <%= u.reviewers.map{ |x| x.name + (u.pull_request_reviewer_relationships.find_by_reviewer_id(x.id).approved_at ? " ✔" : " —") }.join(" ") %>
+        </li>
+      <% end %>
+    <% end %>
+  </ol>
+
+  <div>
+    <h2>Reviewers</h2>
+    <% @reviewers.each do |reviewer| %>
+      <span>
+        <%= link_to reviewer.name, reviewer_path(reviewer), {class: "#{reviewer.is_available? ? "available-reviewer" : "unavailable-reviewer"}"} %>
+      </span>
+    <% end %>
+  </div>
+
+  <div>
+    <h2>Settings</h2>
+    I have my scheduled shutdowns <%= Plankbot::Setting.default.shutdown_times.join(" and ") %> daily, <br>and <%= Plankbot::Setting.default.shutdown_week_days.join(" and ") %> weekly
+  </div>
+
+  <div>
+    <h2>If you are a requestor</h2>
+  </div>
+  <ol>
+    <li>
+      For me to assign a code reviewer, add the label <%= Plankbot::Label::TRIGGER_LABELS.map{|x| '"' + x + '"'}.join(" or ") %>  in your PR in Github
+    </li>
+    <li>
+      Add the label <%= Plankbot::Label::TEAM_LABELS.map{|x| '"' + x + '"'}.join(" or ") %> to require a teammate as a code reviewer
+    </li>
+    <li>
+      Add the label <%= Plankbot::Label::HIGH_SENSITIVITY_LABELS.map{|x| '"' + x + '"'}.join(" or ") %> if your PR is highly sensitive. I will assign reviewers accordingly
+    </li>
+  </ol>
+  <div>
+    <h2>If you are a reviewer</h2>
+  </div>
+  <ol>
+    <li>
+      When approving a PR, aside from giving an approval, add a ":+1:" comment. Otherwise, I will keep on pinging you through Slack
+    </li>
+    <li>
+      Just remove the <%= Plankbot::Label::TRIGGER_LABELS.map{|x| '"' + x + '"'}.join(" or ") %> tag to stop me from reminding you if you have request changes
+    </li>
+    <li>
+      You can adjust your time availability
+    </li>
+  </ol>
+  <h2><%= DateTime.current.strftime("%B %d, %Y %H:%M:%S") %></h1>
+  <div>
+    <h2><a href="https://github.com/carabao-capital/plankbot">Contribute</h2>
+  </div>
+</div>

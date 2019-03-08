@@ -1,0 +1,40 @@
+<div>
+  <h3><%= @reviewer.name %></h3>
+</div>
+
+<div class="reviewer-settings">
+<%= form_tag reviewer_path(@reviewer), method: :put do |f| %>
+  <div>
+    Available Now<br>
+    <% @availability_tags.each do |a| %>
+      <%= check_box_tag "reviewer[reviewer_tag_relationships_attributes][][tag_id]", a.id, @reviewer.tags.where(id: a.id).exists?, class: "reviewer_availability" %>
+      <%= label_tag a.name %>
+      <br>
+    <% end %>
+  </div>
+  <br>
+
+  <div>
+    Availability Schedule<br>
+    <% @time_available_tags.each do |a| %>
+      <%= check_box_tag "reviewer[reviewer_tag_relationships_attributes][][tag_id]", a.id, @reviewer.tags.where(id: a.id).exists?, class: "reviewer_time_available" %>
+      <%= label_tag a.name %>
+      <br>
+    <% end %>
+  </div>
+  <br>
+
+  <div>
+    Team<br>
+    <% @team_tags.each do |a| %>
+      <%= check_box_tag "reviewer[reviewer_tag_relationships_attributes][][tag_id]", a.id, @reviewer.tags.where(id: a.id).exists?, class: "reviewer_team" %>
+      <%= label_tag a.name %>
+      <br>
+    <% end %>
+  </div>
+  <br>
+  <%= submit_tag "save" %>
+<% end %>
+<%= link_to "cancel", pull_requests_path %>
+
+</div>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Plankbot</title>
+  <title>Plankbot (✿◠‿◠)</title>
   <%= stylesheet_link_tag    "plankbot/application", media: "all" %>
   <%= javascript_include_tag "plankbot/application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="<%= Plankbot::Setting.is_indefinitely_shutdown? || Plankbot::Setting.is_within_scheduled_shutdown? ? "shutdown" : "booted-up" %>">
 
 <%= yield %>
 

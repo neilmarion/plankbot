@@ -1,0 +1,15 @@
+<div>
+  <h2>"<%= link_to @pull_request.title, @pull_request.url %>"<br>
+  Requested by <%= @pull_request.requestor.name %></h2>
+  <div>Set Reviewers</div><br>
+  <% @reviewers.where.not(id: @pull_request.requestor.id).each do |reviewer| %>
+    <% if @pull_request.reviewers.where(id: reviewer.id).exists? %>
+      <%= link_to reviewer.name, remove_reviewer_pull_request_reviewer_path(@pull_request.id, reviewer.id), {class: "selected-reviewer", method: :put} %>
+    <% else %>
+      <%= link_to reviewer.name, add_reviewer_pull_request_reviewer_path(@pull_request.id, reviewer.id), {class: "unselected-reviewer", method: :put} %>
+    <% end %>
+  <% end %>
+</div>
+
+<br>
+<%= link_to "cancel", pull_requests_path %>
