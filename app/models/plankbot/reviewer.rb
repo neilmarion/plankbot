@@ -1,6 +1,6 @@
 module Plankbot
   class Reviewer < ApplicationRecord
-    attr_accessor :pull_request_count
+    attr_accessor :pull_request_count, :pull_request_count_for_the_day
 
     has_many :requested_pull_requests, {
       primary_key: :id,
@@ -51,6 +51,11 @@ module Plankbot
 
     def pull_request_count
       @pull_request_count ||= pull_requests.count
+    end
+
+    def pull_request_count_for_the_day
+      @pull_request_count_for_the_day ||=
+        pull_requests.where(created_at: Time.current.beginning_of_day..Time.current.end_of_day).count
     end
 
     def is_available?
