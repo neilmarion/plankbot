@@ -8,6 +8,8 @@ module Plankbot
         requestor = Plankbot::Reviewer.
           find_by_github_id(pr[:requestor_github_id])
 
+        next if requestor.blank?
+
         pull_request = Plankbot::PullRequest.find_by(
           github_id: pr[:github_id],
         )

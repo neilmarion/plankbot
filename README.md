@@ -43,6 +43,8 @@ management_tag = Plankbot::Tag.create(name: "management", kind: "team")
 product_tag = Plankbot::Tag.create(name: "product", kind: "team")
 qa_tag = Plankbot::Tag.create(name: "qa", kind: "team")
 high_sensitivity_tag = Plankbot::Tag.create(name: "high_sensitivity", kind: "tier")
+fcc_code_quality_check_tag = Plankbot::Tag.create(name: "fcc_code_quality_check", kind: "tier")
+fca_code_quality_check_tag = Plankbot::Tag.create(name: "fca_code_quality_check", kind: "tier")
 
 reviewers = {
   jessc: {name: "Jess", slack_id: "SLACKID", github_id: "jmalvinchin", tags: [available_tag, time_1_tag, min_tag]},
@@ -87,6 +89,8 @@ labels = [
   "fcc",
   "fca",
   "website",
+  "fcc_code_quality_check",
+  "fca_code_quality_check",
 ]
 
 labels.each do |key|
