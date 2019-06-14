@@ -5,7 +5,7 @@ module Plankbot
       message = BuildDailyStats.execute
 
       Slack::Web::Client.new.chat_postMessage({
-        channel: "coding",
+        channel: "tech_coding",
         text: message.to_s + "\n\nGoodnight! :zzz:",
         as_user: true,
       })
