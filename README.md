@@ -104,5 +104,25 @@ Plankbot::Setting.create({
 })
 ```
 
+## Repo Versions
+
+This is an extra feature of Plankbot that does not have anything to do with review assignment. This feature announces the new version of the repository.
+
+```
+Plankbot::RepoVersion.create({
+  repo_name: "FCA",
+  version: "",
+  github_api_endpoint: "https://api.github.com/repos/carabao-capital/first-circle-account/releases",
+  github_versions_url: "https://github.com/carabao-capital/first-circle-app/releases",
+})
+
+Plankbot::RepoVersion.create({
+  repo_name: "FCC",
+  version: "",
+  github_api_endpoint: "https://api.github.com/repos/carabao-capital/first-circle-app/releases",
+  github_versions_url: "https://github.com/carabao-capital/first-circle-app/releases",
+})
+```
+
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
