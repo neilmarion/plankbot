@@ -20,7 +20,7 @@
     <% @prs.each do |u| %>
       <% if u.approved? %>
         <li class="approved-pr">
-          <%= link_to "#{u.title} (by #{u.requestor.name})", u.url %><br>
+          <%= link_to "#{u.title} (by #{u.requestor.name})", u.url %> <%= link_to "edit", edit_pull_request_path(u), {class: "edit"} %><br>
           <%= u.labels.map{ |x| "##{x.name}" }.join(" ") %><br>
           <%= u.reviewers.map{ |x| x.name + (u.pull_request_reviewer_relationships.find_by_reviewer_id(x.id).approved_at ? " ✔" : " —") }.join(" ") %>
         </li>
@@ -60,6 +60,9 @@
     </li>
     <li>
       Add the label <%= Plankbot::Label::HIGH_SENSITIVITY_LABELS.map{|x| '"' + x + '"'}.join(" or ") %> if your PR is highly sensitive. I will assign reviewers accordingly
+    </li>
+    <li>
+      Add the label <%= Plankbot::Label::CODE_QUALITY_LABELS.map{|x| '"' + x + '"'}.join(" or ") %> if you want your PR to be checked by reviewers assigned to oversee code quality. I will assign reviewers accordingly
     </li>
   </ol>
   <div>

@@ -1,39 +1,27 @@
 module Plankbot
   class PickCodebaseQualityReviewers
-    FCC_QUALITY_CHECK = "fcc_code_quality_check"
-    FCA_QUALITY_CHECK = "fca_code_quality_check"
-
     def self.execute(context)
-      fcc_tag = Tag.find_by({
-        name: FCC_QUALITY_CHECK,
+      tags = Tag.where({
+        name: Plankbot::Label::CODE_QUALITY_LABELS,
         kind: "tier",
       })
 
-      fca_tag = Tag.find_by({
-        name: FCA_QUALITY_CHECK,
-        kind: "tier",
-      })
+      return context if tags.blank?
 
-      return context if fcc_tag.blank? && fca_tag.blank?
-
-      fcc_quality_label = context[:pull_request].labels.where({
-        name: fcc_tag.name,
+      requested = context[:pull_request].labels.where({
+        name: Plankbot::Label::CODE_QUALITY_LABELS,
       }).exists?
 
-      fca_quality_label = context[:pull_request].labels.where({
-        name: fca_tag.name,
-      }).exists?
-
-      return context if fcc_quality_label && fca_quality_label
+      return context unless requested
 
       requestor = context[:pull_request].requestor
-      fcc_chosen = fcc_tag.reviewers.where.not(id: requestor&.id)
-      fca_chosen = fca_tag.reviewers.where.not(id: requestor&.id)
 
-      if fcc_quality_label
-        context[:chosen] = fcc_chosen.to_a + context[:chosen]
-      elsif fca_quality_label
-        context[:chosen] = fca_chosen.to_a + context[:chosen]
+      context[:pull_request].labels.where(name: Plankbot::Label::Plankbot::Label::CODE_QUALITY_LABELS).each do |l|
+        next if tags.find_by_name(l.name).reviewers.blank?
+
+        chosen = tags.find_by_name(l.name).reviewers.
+          where.not(id: requestor&.id)
+        context[:chosen] = chosen.to_a + context[:chosen]
       end
 
       context

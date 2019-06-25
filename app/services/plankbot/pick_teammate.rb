@@ -1,10 +1,10 @@
 module Plankbot
   class PickTeammate
     TEAM_LABELS = [
-      "onboarding",
-      "min",
-      "mout",
-      "prodeng",
+      "cje",
+      "up",
+      "orig",
+      "platform",
       "data",
       "design",
       "management",

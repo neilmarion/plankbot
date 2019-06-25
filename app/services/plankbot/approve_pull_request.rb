@@ -1,7 +1,5 @@
 module Plankbot
   class ApprovePullRequest
-    TEAM_LABELS = ["onboarding", "min", "mout", "prodeng"]
-
     def self.execute(pull_request:, approvers:)
       approvers.each do |approver|
         reviewer = Plankbot::Reviewer.find_by_github_id(approver)

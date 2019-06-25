@@ -1,25 +1,29 @@
 module Plankbot
   class PickHighSensitivityReviewers
-    HIGH_SENSITIVITY = "high_sensitivity"
-
     def self.execute(context)
-      tag = Tag.find_by({
-        name: HIGH_SENSITIVITY,
+      tags = Tag.where({
+        name: Plankbot::Label::HIGH_SENSITIVITY_LABELS,
         kind: "tier",
       })
 
-      return context unless tag
+      return context if tags.blank?
 
-      highly_sensitive = context[:pull_request].labels.where({
-        name: tag.name,
+      requested = context[:pull_request].labels.where({
+        name: Plankbot::Label::HIGH_SENSITIVITY_LABELS,
       }).exists?
 
-      return context unless highly_sensitive
+      return context unless requested
 
       requestor = context[:pull_request].requestor
-      chosen = tag.reviewers.where.not(id: requestor&.id)
 
-      context[:chosen] = chosen.to_a + context[:chosen]
+      context[:pull_request].labels.where(name: Plankbot::Label::HIGH_SENSITIVITY_LABELS).each do |l|
+        next if tags.find_by_name(l.name).reviewers.blank?
+
+        chosen = tags.find_by_name(l.name).reviewers.
+          where.not(id: requestor&.id)
+        context[:chosen] = chosen.to_a + context[:chosen]
+      end
+
       context
     end
   end
