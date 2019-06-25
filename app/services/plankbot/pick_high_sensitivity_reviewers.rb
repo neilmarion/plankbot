@@ -19,7 +19,7 @@ module Plankbot
       requestor = context[:pull_request].requestor
       chosen = tag.reviewers.where.not(id: requestor&.id)
 
-      context[:chosen] = context[:chosen] + chosen.to_a
+      context[:chosen] = chosen.to_a + context[:chosen]
       context
     end
   end

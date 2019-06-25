@@ -9,9 +9,9 @@ module Plankbot
       context = FilterByAvailability.execute(context)
       context = FilterByTimeAvailable.execute(context)
       context = PickCodebaseQualityReviewers.execute(context)
+      context = PickHighSensitivityReviewers.execute(context)
       context = PickTeammate.execute(context)
       context = PickWithLeastAssignment.execute(context)
-      context = PickHighSensitivityReviewers.execute(context)
 
       context[:chosen]
     end
