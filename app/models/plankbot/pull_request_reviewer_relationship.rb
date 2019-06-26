@@ -33,7 +33,7 @@ module Plankbot
 
     def ping_reviewer
       begin
-        SLACK_CLIENT.chat_postMessage(
+        PLANKBOT_SLACK_CLIENT.chat_postMessage(
           channel: reviewer.slack_id,
           text: "#{self.pull_request.requestor.name} wants you to review their PR <#{self.pull_request.url}|#{self.pull_request.title}> :pray: :mag_right:",
           as_user: true,
@@ -44,7 +44,7 @@ module Plankbot
 
     def ping_requestor
       begin
-        SLACK_CLIENT.chat_postMessage({
+        PLANKBOT_SLACK_CLIENT.chat_postMessage({
           channel: self.pull_request.requestor.slack_id,
           text: "Great! Your PR <#{self.pull_request.url}|#{self.pull_request.title}> has been approved by #{self.pull_request.reviewers.pluck(:name).join(" and ")} :100: :fast_parrot:",
           as_user: true,

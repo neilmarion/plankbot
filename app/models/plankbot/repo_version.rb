@@ -9,7 +9,7 @@ module Plankbot
         if version["name"] != rv.version
           rv.update_attributes(version: version["name"])
 
-          SLACK_CLIENT.chat_postMessage(
+          PLANKBOT_SLACK_CLIENT.chat_postMessage(
             channel: "tech_coding",
             text: "*#{rv.repo_name}* is now <#{rv.github_versions_url}/tag/#{version["name"]}|#{version["name"]}> :arrow_up: <#{rv.github_versions_url}|releases>",
             as_user: true,
