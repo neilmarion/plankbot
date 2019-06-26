@@ -58,7 +58,7 @@ module Plankbot
     private
 
     def ping_requestor_about_destroy
-      Slack::Web::Client.new.chat_postMessage(
+      SLACK_CLIENT.chat_postMessage(
         channel: requestor.slack_id,
         text: "I removed <#{url}|#{title}> from my database. Maybe one of the reviewer have request changes? :man-tipping-hand:",
         as_user: true,

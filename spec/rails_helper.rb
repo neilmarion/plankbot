@@ -79,7 +79,7 @@ RSpec.configure do |config|
 
   SENSITIVE_VARS = [
     "GITHUB_ACCESS_TOKEN",
-    "SLACK_API_TOKEN",
+    "PLANKBOT_SLACK_API_TOKEN",
   ]
 
   VCR.configure do |config|

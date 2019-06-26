@@ -18,7 +18,7 @@ mount Plankbot::Engine => "/plankbot"
 ```
 
 ## Slack API Token
-Set the `SLACK_API_TOKEN` in the ENV. Go [here](https://firstcircle.slack.com/apps/new/A0F7YS25R-bots) to create one.
+Set the `PLANKBOT_SLACK_API_TOKEN` in the ENV. Go [here](https://firstcircle.slack.com/apps/new/A0F7YS25R-bots) to create one.
 
 ## Github Access Token
 Set the `GITHUB_ACCESS_TOKEN` in the ENV. Go [here](https://github.com/settings/tokens) to create one.
