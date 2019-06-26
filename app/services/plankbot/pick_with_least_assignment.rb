@@ -4,17 +4,9 @@ module Plankbot
     RELEASE_LABEL = "release"
 
     def self.execute(context)
-      reviewer_count =
-        if context[:pull_request].labels.
-          where(name: REVIEW_READY_LABEL).exists?
-          2
-        elsif context[:pull_request].labels.
-          where(name: RELEASE_LABEL).exists?
-          1
-        end
-
+      reviewer_count = context[:reviewer_count]
       # NOTE: If labels does not exist
-      unless reviewer_count
+      if reviewer_count == 0
         context[:chosen] = []
         return context
       end

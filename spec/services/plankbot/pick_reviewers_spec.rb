@@ -181,7 +181,7 @@ module Plankbot
         pull_request.pull_request_label_relationships.create(label: onboarding_label)
         pull_request.pull_request_label_relationships.create(label: review_ready_label)
 
-        ctx = {chosen: [], remaining: Plankbot::Reviewer.all.to_a, pull_request: pull_request}
+        ctx = {chosen: [], remaining: Plankbot::Reviewer.all.to_a, pull_request: pull_request, reviewer_count: 2}
         ctx = OrderReviewersByPullRequestCount.execute(ctx)
         ctx = PickWithLeastAssignment.execute(ctx)
         expect(ctx[:chosen].count).to eq 2
@@ -204,7 +204,7 @@ module Plankbot
         pull_request.pull_request_label_relationships.create(label: review_ready_label)
         min_reviewers = Plankbot::Tag.find_by_name(min_label.name).reviewers
 
-        ctx = {chosen: [], remaining: Plankbot::Reviewer.all.to_a, pull_request: pull_request}
+        ctx = {chosen: [], remaining: Plankbot::Reviewer.all.to_a, pull_request: pull_request, reviewer_count: 2}
         ctx = OrderReviewersByPullRequestCount.execute(ctx)
         ctx = PickTeammate.execute(ctx)
         ctx = PickWithLeastAssignment.execute(ctx)
@@ -228,7 +228,7 @@ module Plankbot
         pull_request.pull_request_label_relationships.create(label: review_ready_label)
         min_reviewers = Plankbot::Tag.find_by_name(min_label.name).reviewers
 
-        ctx = {chosen: [], remaining: Plankbot::Reviewer.all.to_a, pull_request: pull_request}
+        ctx = {chosen: [], remaining: Plankbot::Reviewer.all.to_a, pull_request: pull_request, reviewer_count: 2}
         ctx = OrderReviewersByPullRequestCount.execute(ctx)
         ctx = PickTeammate.execute(ctx)
         ctx = PickWithLeastAssignment.execute(ctx)
