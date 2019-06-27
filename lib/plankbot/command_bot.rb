@@ -26,8 +26,19 @@ module Plankbot
       client.say(channel: data.channel, text: "Redeploying...")
     end
 
+    command 'showenvs' do |client, data, match|
+      text = JSON.parse(ENV['PLANKBOT_FC_ENVIRONMENTS']).map.with_index do |t, i|
+        "*#{i+1}) #{t["desc"]}:* <#{t["fcc"]["url"]}|fcc> _#{t["fcc"]["branch"]}_ <#{t["fcc"]["infra"]}|infra>, <#{t["fca"]["url"]}|fca> _#{t["fca"]["branch"]}_ <#{t["fca"]["infra"]}|infra>, <#{t["site"]["url"]}|site> _#{t["site"]["branch"]}_ <#{t["site"]["infra"]}|infra>"
+      end
+
+      note = "_* Ping <@U4SK3RBPS> if there are changes in ownership of an environment_"
+
+      client.say(channel: data.channel, text: text.join("\n") + "\n" + note)
+    end
+
     command 'help' do |client, data, match|
-      text = "- `redeploy (fca|fcc) (prod|preprod)` to redeploy Cloud66 instance\n"
+      text = "- `redeploy (fca|fcc) (prod|preprod)` to redeploy Cloud66 instance\n" +
+      text = "- `showenvs` to show stack environments\n"
 
       client.say(channel: data.channel, text: text)
     end
