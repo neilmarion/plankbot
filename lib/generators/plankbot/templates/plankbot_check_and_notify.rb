@@ -20,4 +20,9 @@ CheckAndNotify::Callbacks.check_after_ten_minutes do
   return
 end
 
+CheckAndNotify::Callbacks.check_after_ten_minutes do
+  Plankbot::EtlReleases.execute
+  return
+end
+
 CheckAndNotify.init_cron
