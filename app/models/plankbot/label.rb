@@ -11,7 +11,7 @@ module Plankbot
     TRIGGER_LABELS = ["review_ready", "release"]
     TEAM_LABELS = ["cje", "up", "orig", "platform"]
     HIGH_SENSITIVITY_LABELS = ["high_sensitivity"]
-    CODE_QUALITY_LABELS = ["fcc_code_quality_check, fca_code_quality_check"]
+    CODE_QUALITY_LABELS = ["fcc_code_quality_check", "fca_code_quality_check"]
 
     has_many :pull_requests
   end
