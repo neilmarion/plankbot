@@ -27,7 +27,7 @@ module Plankbot
               "operations"
             ],
             jql: "fixVersion = \"#{release["name"]}\"",
-            maxResults: 15,
+            maxResults: 100,
             fieldsByKeys: false,
             fields: [
               "summary",
