@@ -36,9 +36,32 @@ module Plankbot
       client.say(channel: data.channel, text: text.join("\n") + "\n" + note)
     end
 
+    command 'myprs' do |client, data, match|
+      reviewer = Reviewer.find_by(slack_id: data.user)
+      pull_requests = Plankbot::PullRequest.
+        unapproved.where(requestor_id: reviewer.id)
+
+      text = pull_requests.map do |pull_request|
+        approved_reviewers_text = pull_request.approved_reviewers.map do |ar|
+          "#{ar.name} ✔"
+        end
+
+        unapproved_reviewers_text = pull_request.unapproved_reviewers.map do |ur|
+          "#{ur.name} —"
+        end
+
+        "- <#{pull_request.url}|#{pull_request.title}> - #{(approved_reviewers_text + unapproved_reviewers_text).join(', ')}"
+      end
+
+      text = text.blank? ? "You got no unapproved PRs" : text.join("\n")
+
+      client.say(channel: data.channel, text: text)
+    end
+
     command 'help' do |client, data, match|
       text = "- `redeploy (fca|fcc) (prod|preprod)` to redeploy Cloud66 instance\n" +
-      text = "- `showenvs` to show stack environments\n"
+      text = "- `showenvs` to show stack environments\n" +
+      text = "- `myprs` to show current PRs\n"
 
       client.say(channel: data.channel, text: text)
     end
