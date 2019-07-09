@@ -6,6 +6,7 @@ module Plankbot
       "CJE" => "(PO) <@UFE78H79U>, (Lead) <@U5VFECCPM>, (Eng) <@U4TDX4QSH> <@UH83SB649> <@UJG3JHHEF>, (QA) <@UJSDQ82LB>",
       "UP" => "(PO) <@U2DHPSA9J>, (Lead) <@U6N5LSTJR>, (Eng) <@UH5GJ1ZKL>, (QA) <@UHJ77HHE2>",
       "ORIG" => "(PO) <@UC89TQME3>, (Lead) <@U5RT71ZKQ>, (Eng) <@UHGQM9N76> <@UKNT1DNCR>, (QA) <@UKDS7QUJC>",
+      "PFM" => "<@UHECKLPMW> <@U4SK3RBPS>",
     }
 
     def announce

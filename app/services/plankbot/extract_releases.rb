@@ -1,6 +1,6 @@
 module Plankbot
   class ExtractReleases
-    TEAMS = ["CJE", "ORIG", "UP"]
+    TEAMS = ["CJE", "ORIG", "UP", "PFM"]
 
     def self.execute
       releases = []

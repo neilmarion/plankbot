@@ -4,6 +4,7 @@ module Plankbot
       10103 => "CJE",
       10105 => "ORIG",
       10104 => "UP",
+      10113 => "PFM",
     }
 
     def self.execute(extracted_releases)
