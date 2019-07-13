@@ -18,4 +18,15 @@ Plankbot::Engine.routes.draw do
   end
 
   resources :reviewers
+
+  resources :test_runs do
+    member do
+      delete :cancel
+    end
+
+    collection do
+      get :status
+      post :run
+    end
+  end
 end

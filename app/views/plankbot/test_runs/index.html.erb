@@ -1,0 +1,11 @@
+<div class="test-runs">
+  <h2>Automated Test Runs</h2>
+  <ol>
+    <% @test_runs.each do |t| %>
+      <li>
+        <%= "#{t.circle_build_id} - #{t.github_org}/#{t.github_repo}/#{t.github_branch} - #{t.github_username} - #{t.status}" %>
+        <%= link_to "show", test_run_path(t) %>
+      </li>
+    <% end %>
+  </ol>
+</div>
