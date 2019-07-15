@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'sidekiq-cron'
   s.add_dependency 'rufus-scheduler', '~> 3.4.2'
   s.add_dependency 'sidekiq-failures'
-  s.add_dependency "check_and_notify", '0.1.5'
   s.add_dependency 'slack-ruby-client'
   s.add_dependency 'slack-ruby-bot'
   s.add_dependency 'faye-websocket', '~> 0.10.2', '> 0.10.2'
