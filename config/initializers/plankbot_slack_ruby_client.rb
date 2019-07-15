@@ -11,3 +11,33 @@ Sidekiq::Cron::Job.create({
   cron: '00 16 * * FRI',
   class: 'Plankbot::SendWeeklyReleaseNotesWorker'
 })
+
+Sidekiq::Cron::Job.create({
+  name: 'Plankbot::EtlReleasesWorker',
+  cron: '*/10 * * * *',
+  class: 'Plankbot::EtlReleasesWorker'
+})
+
+Sidekiq::Cron::Job.create({
+  name: 'Plankbot::SendDailyStatsWorker',
+  cron: '*/10 * * * *',
+  class: 'Plankbot::SendDailyStatsWorker'
+})
+
+Sidekiq::Cron::Job.create({
+  name: 'Plankbot::RemindReviewersWorker',
+  cron: '*/10 * * * *',
+  class: 'Plankbot::RemindReviewersWorker'
+})
+
+Sidekiq::Cron::Job.create({
+  name: 'Plankbot::RefreshAndAnnounceRepoVersionWorker',
+  cron: '*/1 * * * *',
+  class: 'Plankbot::RefreshAndAnnounceRepoVersionWorker'
+})
+
+Sidekiq::Cron::Job.create({
+  name: 'Plankbot::EtlPullRequestsWorker',
+  cron: '*/1 * * * *',
+  class: 'Plankbot::EtlPullRequestsWorker'
+})
