@@ -47,3 +47,9 @@ Sidekiq::Cron::Job.create({
   cron: '0 18 * * *',
   class: 'Plankbot::SendDailyScrumCeremoniesWorker'
 })
+
+Sidekiq::Cron::Job.create({
+  name: 'Plankbot::SendFeedbackReminderWorker',
+  cron: '30 12 * * WED',
+  class: 'Plankbot::SendFeedbackReminderWorker'
+})
