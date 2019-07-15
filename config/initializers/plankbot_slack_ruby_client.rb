@@ -41,3 +41,9 @@ Sidekiq::Cron::Job.create({
   cron: '*/1 * * * *',
   class: 'Plankbot::EtlPullRequestsWorker'
 })
+
+Sidekiq::Cron::Job.create({
+  name: 'Plankbot::SendDailyScrumCeremoniesWorker',
+  cron: '0 18 * * *',
+  class: 'Plankbot::SendDailyScrumCeremoniesWorker'
+})
