@@ -15,7 +15,9 @@ module Plankbot
         )
 
         # NOTE: Create PRs
-        unless pull_request
+        if pull_request
+          pull_request.update_attributes(title: pr[:title])
+        else
           pull_request = Plankbot::PullRequest.create(
             title: pr[:title],
             url: pr[:url],
