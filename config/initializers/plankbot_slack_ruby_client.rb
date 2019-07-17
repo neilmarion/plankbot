@@ -53,3 +53,11 @@ Sidekiq::Cron::Job.create({
   cron: '30 12 * * WED',
   class: 'Plankbot::SendFeedbackReminderWorker'
 })
+
+Sidekiq::Cron::Job.create({
+  name: 'Plankbot::EtlCriticalIssuesWorker',
+  cron: '*/5 * * * *',
+  class: 'Plankbot::EtlCriticalIssuesWorker'
+})
+
+Plankbot::AnnounceAutoDeploymentFreeze.execute

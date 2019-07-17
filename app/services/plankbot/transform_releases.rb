@@ -35,6 +35,9 @@ module Plankbot
               "status",
               "assignee",
               "issuetype",
+              "project",
+              "sprint",
+              "reporter",
             ],
             startAt: 0
           }.to_json,

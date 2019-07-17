@@ -17,5 +17,6 @@ Plankbot::Engine.routes.draw do
     end
   end
 
+  resources :auto_deployment_status, only: [:index]
   resources :reviewers
 end
