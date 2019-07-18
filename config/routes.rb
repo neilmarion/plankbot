@@ -18,5 +18,6 @@ Plankbot::Engine.routes.draw do
   end
 
   resources :auto_deployment_status, only: [:index]
+  resources :slack, only: [:show, :create]
   resources :reviewers
 end
