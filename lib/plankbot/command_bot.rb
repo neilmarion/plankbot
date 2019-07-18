@@ -18,6 +18,12 @@ module Plankbot
         return
       end
 
+      result = HTTParty.get("https://app.cloud66.com/api/3/stacks/#{stack_id}",
+        :headers => { "Authorization" => "Bearer #{ENV['PLANKBOT_CLOUD66_AUTH_CODE']}" }
+      )
+
+      return if result.parsed_response["response"]["is_busy"]
+
       HTTParty.post("https://app.cloud66.com/api/3/stacks/#{stack_id}/deployments",
         :body => {},
         :headers => { "Authorization" => "Bearer #{ENV['PLANKBOT_CLOUD66_AUTH_CODE']}" }

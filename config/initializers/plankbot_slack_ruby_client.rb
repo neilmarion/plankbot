@@ -59,5 +59,3 @@ Sidekiq::Cron::Job.create({
   cron: '*/5 * * * *',
   class: 'Plankbot::EtlCriticalIssuesWorker'
 })
-
-Plankbot::AnnounceAutoDeploymentFreeze.execute
