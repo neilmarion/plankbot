@@ -43,7 +43,7 @@ module Plankbot
     end
 
     command 'myprs' do |client, data, match|
-      reviewer = Reviewer.find_by(slack_id: data.user)
+      reviewer = Plankbot::Reviewer.find_by(slack_id: data.user)
       pull_requests = Plankbot::PullRequest.
         unapproved.where(requestor_id: reviewer.id)
 
