@@ -124,5 +124,24 @@ Plankbot::RepoVersion.create({
 })
 ```
 
+## Running
+
+In your `config.ru` file:
+
+```
+require 'plankbot'
+
+Thread.abort_on_exception = true
+Thread.new do
+  begin
+    Plankbot::CommandBot.run
+  rescue Exception => e
+    STDERR.puts "ERROR: #{e}"
+    STDERR.puts e.backtrace
+    raise e
+  end
+end
+```
+
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

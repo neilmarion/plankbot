@@ -3,7 +3,11 @@ module Plankbot
     delegate :client, to: :instance
 
     def self.run
-      instance.run
+      begin
+        instance.run
+      rescue Slack::Web::Api::Errors::SlackError
+        raise("Invalid ENV['PLANKBOT_SLACK_API_TOKEN']")
+      end
     end
 
     def self.instance
