@@ -6,12 +6,6 @@ module Plankbot
         PickWithLeastAssignment::RELEASE_LABEL,
       ]
 
-      REPO_LABELS = [
-        {match: /first-circle-account/, label: "fca"},
-        {match: /first-circle-app/, label: "fcc"},
-        {match: /firstcircle\.ph/, label: "website"},
-      ]
-
       THUMBS_UP = /\:\+1\:|👍/
 
       def self.execute(extracted_pull_requests)
@@ -44,8 +38,10 @@ module Plankbot
       private
 
       def self.get_repo_label(pr)
-        chosen_labels = REPO_LABELS.select do |rl|
-          rl[:label] if pr["url"].match?(rl[:match])
+        repos = JSON.parse(ENV["PLANKBOT_REPOS"])
+
+        chosen_labels = repos.select do |repo|
+          repo["label"] if pr["url"].match?(Regexp.new(repo["github_repo"]))
         end
 
         chosen_labels.first[:label] if chosen_labels.present?

@@ -23,6 +23,15 @@ Set the `PLANKBOT_SLACK_API_TOKEN` in the ENV. Go [here](https://firstcircle.sla
 ## Github Access Token
 Set the `GITHUB_ACCESS_TOKEN` in the ENV. Go [here](https://github.com/settings/tokens) to create one.
 
+## Environment Variables
+
+```
+PLANKBOT_REPOS='[
+  {"github_repo": "carabao-capital/first-circle-account", "label": "fca"},
+  {"github_repo": "carabao-capital/first-circle-app", "label": "fcc"},
+]'
+```
+
 ## Seeds
 To create seed data
 

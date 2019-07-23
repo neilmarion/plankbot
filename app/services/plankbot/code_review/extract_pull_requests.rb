@@ -1,17 +1,13 @@
 module Plankbot
   module CodeReview
     class ExtractPullRequests
-      REPO_API_PULL_REQUESTS = [
-        "https://api.github.com/repos/carabao-capital/first-circle-app/pulls?access_token=#{ENV["GITHUB_ACCESS_TOKEN"]}",
-        "https://api.github.com/repos/carabao-capital/first-circle-account/pulls?access_token=#{ENV["GITHUB_ACCESS_TOKEN"]}",
-        "https://api.github.com/repos/carabao-capital/firstcircle.ph/pulls?access_token=#{ENV["GITHUB_ACCESS_TOKEN"]}",
-      ]
-
       def self.execute
         pull_requests = []
 
-        REPO_API_PULL_REQUESTS.each do |repo|
-          pull_requests = pull_requests + HTTParty.get(repo)
+        repos = JSON.parse(ENV["PLANKBOT_REPOS"])
+
+        repos.each do |repo|
+          pull_requests = pull_requests + HTTParty.get("https://api.github.com/repos/#{repo["github_repo"]}/pulls?access_token=#{ENV["GITHUB_ACCESS_TOKEN"]}")
         end
 
         pull_requests
