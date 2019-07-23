@@ -62,7 +62,7 @@ module Plankbot
       return tags.
         where(kind: "availability").
         pluck(:name).
-        include? FilterByAvailability::YES_TAG
+        include? CodeReview::FilterByAvailability::YES_TAG
     end
   end
 end

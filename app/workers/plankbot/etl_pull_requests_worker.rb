@@ -4,7 +4,7 @@ module Plankbot
     sidekiq_options retry: 1
 
     def perform
-      Plankbot::EtlPullRequests.execute
+      CodeReview::EtlPullRequests.execute
     end
   end
 end

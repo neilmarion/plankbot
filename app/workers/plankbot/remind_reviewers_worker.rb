@@ -4,7 +4,7 @@ module Plankbot
     sidekiq_options retry: 1
 
     def perform
-      Plankbot::RemindReviewers.execute
+      CodeReview::RemindReviewers.execute
     end
   end
 end

@@ -4,7 +4,7 @@ module Plankbot
     sidekiq_options retry: 1
 
     def perform
-      Plankbot::SendDailyStats.execute
+      CodeReview::SendDailyStats.execute
     end
   end
 end

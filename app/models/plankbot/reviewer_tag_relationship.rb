@@ -9,7 +9,7 @@ module Plankbot
 
     def remove_assignments
       if self.tag.kind == "availability" &&
-          self.tag.name == FilterByAvailability::NO_TAG
+          self.tag.name == CodeReview::FilterByAvailability::NO_TAG
 
         self.reviewer.
           pull_request_reviewer_relationships.

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-module Plankbot
+module Plankbot::CodeReview
   describe EtlPullRequests, vcr: { record: :once } do
     before(:each) do
       available_tag = Plankbot::Tag.create(name: "Yes", kind: "availability")

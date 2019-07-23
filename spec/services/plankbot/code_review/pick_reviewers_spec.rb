@@ -1,6 +1,6 @@
 require "rails_helper"
 
-module Plankbot
+module Plankbot::CodeReview
   describe PickReviewers do
     let(:available_tag) do
       Plankbot::Tag.create(name: "Yes", kind: "availability")
