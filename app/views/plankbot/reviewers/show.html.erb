@@ -25,6 +25,16 @@
   <br>
 
   <div>
+    Department<br>
+    <% @department_tags.each do |a| %>
+      <%= check_box_tag "reviewer[reviewer_tag_relationships_attributes][][tag_id]", a.id, @reviewer.tags.where(id: a.id).exists?, class: "reviewer_department" %>
+      <%= label_tag a.name %>
+      <br>
+    <% end %>
+  </div>
+  <br>
+
+  <div>
     Team<br>
     <% @team_tags.each do |a| %>
       <%= check_box_tag "reviewer[reviewer_tag_relationships_attributes][][tag_id]", a.id, @reviewer.tags.where(id: a.id).exists?, class: "reviewer_team" %>

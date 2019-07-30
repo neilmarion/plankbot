@@ -13,6 +13,25 @@ module Plankbot
     HIGH_SENSITIVITY_LABELS = ["high_sensitivity"]
     CODE_QUALITY_LABELS = ["fcc_code_quality_check", "fca_code_quality_check"]
 
-    has_many :pull_requests
+    COLORS = {
+      "review_ready" => "#2ecc71",
+      "release" => "#1abc9c",
+      "high_sensitivity" => "#c0392b",
+      "fcc" => "#9b59b6",
+      "fca" => "#ff9f43",
+      "fca_code_quality_check" => "#00d2d3",
+      "fcc_code_quality_check" => "#341f97",
+      "cje" => "#3498db",
+      "up" => "#e67e22",
+      "orig" => "#f1c40f",
+      "data" => "#ff6b6b",
+      "engineering" => "#f368e0",
+      "data-airflow" => "#fd79a8",
+      "data-warehouse" => "#e17055",
+      "limits-engine" => "#6D214F",
+    }
+
+    has_many :pull_request_label_relationships
+    has_many :pull_requests, through: :pull_request_label_relationships
   end
 end

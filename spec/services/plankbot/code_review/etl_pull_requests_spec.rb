@@ -19,23 +19,25 @@ module Plankbot::CodeReview
       product_tag = Plankbot::Tag.create(name: "product", kind: "team")
       qa_tag = Plankbot::Tag.create(name: "qa", kind: "team")
       high_sensitivity_tag = Plankbot::Tag.create(name: "high_sensitivity", kind: "tier")
+      engineering_dept_tag = Plankbot::Tag.create(name: "engineering", kind: "department")
+      data_dept_tag = Plankbot::Tag.create(name: "data", kind: "department")
 
       reviewers = {
-        jessc: {name: "Jess", slack_id: "U4SK3RBPS", github_id: "jmalvinchin", tags: [available_tag, time_1_tag, min_tag]},
-        dc: {name: "Dean", slack_id: "U4SK3RBPS", github_id: "dc-fc", tags: [available_tag, time_1_tag, min_tag]},
-        earle: {name: "Earle", slack_id: "U4SK3RBPS", github_id: "erbunao", tags: [available_tag, time_4_tag, prodeng_tag]},
-        francis: {name: "Francis", slack_id: "U4SK3RBPS", github_id: "sic-f", tags: [available_tag, time_4_tag, mout_tag]},
-        nmfdelacruz: {name: "Neil", slack_id: "U4SK3RBPS", github_id: "neilmarion", tags: [available_tag, time_4_tag, onboarding_tag]},
-        rickdtrick: {name: "Rick", slack_id: "U4SK3RBPS", github_id: "rickdtrick", tags: [available_tag, time_4_tag, onboarding_tag]},
-        angelique: {name: "Anj", slack_id: "U4SK3RBPS", github_id: "angeliqueulep", tags: [available_tag, time_4_tag, prodeng_tag]},
-        jan: {name: "Jan", slack_id: "U4SK3RBPS", github_id: "fc-janharold", tags: [not_available_tag, time_4_tag, design_tag]},
-        tj: {name: "TJ", slack_id: "U4SK3RBPS", github_id: "tjpalanca", tags: [not_available_tag, time_4_tag, data_tag]},
-        andrewe: {name: "Andrew E", slack_id: "U4SK3RBPS", github_id: "aescay", tags: [not_available_tag, time_4_tag, data_tag]},
-        tony: {name: "Tony", slack_id: "U4SK3RBPS", github_id: "tonyennis145", tags: [not_available_tag, time_4_tag, management_tag, high_sensitivity_tag]},
-        brian: {name: "Brian", slack_id: "U4SK3RBPS", github_id: "briandragon", tags: [not_available_tag, time_4_tag, management_tag]},
-        jerico: {name: "Jerico", slack_id: "U4SK3RBPS", github_id: "jericoramirez", tags: [not_available_tag, time_4_tag, qa_tag]},
-        jig: {name: "Jig", slack_id: "U4SK3RBPS", github_id: "JigFirstCircle", tags: [not_available_tag, time_4_tag, product_tag]},
-        rj: {name: "RJ", slack_id: "U4SK3RBPS", github_id: "rjomosura", tags: [not_available_tag, time_4_tag, qa_tag]},
+        jessc: {name: "Jess", slack_id: "U4SK3RBPS", github_id: "jmalvinchin", tags: [available_tag, time_1_tag, min_tag, engineering_dept_tag]},
+        dc: {name: "Dean", slack_id: "U4SK3RBPS", github_id: "dc-fc", tags: [available_tag, time_1_tag, min_tag, engineering_dept_tag]},
+        earle: {name: "Earle", slack_id: "U4SK3RBPS", github_id: "erbunao", tags: [available_tag, time_4_tag, prodeng_tag, engineering_dept_tag]},
+        francis: {name: "Francis", slack_id: "U4SK3RBPS", github_id: "sic-f", tags: [available_tag, time_4_tag, mout_tag, engineering_dept_tag]},
+        nmfdelacruz: {name: "Neil", slack_id: "U4SK3RBPS", github_id: "neilmarion", tags: [available_tag, time_4_tag, onboarding_tag, engineering_dept_tag]},
+        rickdtrick: {name: "Rick", slack_id: "U4SK3RBPS", github_id: "rickdtrick", tags: [available_tag, time_4_tag, onboarding_tag, engineering_dept_tag]},
+        angelique: {name: "Anj", slack_id: "U4SK3RBPS", github_id: "angeliqueulep", tags: [available_tag, time_4_tag, prodeng_tag, engineering_dept_tag]},
+        jan: {name: "Jan", slack_id: "U4SK3RBPS", github_id: "fc-janharold", tags: [not_available_tag, time_4_tag, design_tag, engineering_dept_tag]},
+        tj: {name: "TJ", slack_id: "U4SK3RBPS", github_id: "tjpalanca", tags: [not_available_tag, time_4_tag, data_tag, engineering_dept_tag]},
+        andrewe: {name: "Andrew E", slack_id: "U4SK3RBPS", github_id: "aescay", tags: [not_available_tag, time_4_tag, data_tag, engineering_dept_tag]},
+        tony: {name: "Tony", slack_id: "U4SK3RBPS", github_id: "tonyennis145", tags: [not_available_tag, time_4_tag, management_tag, high_sensitivity_tag, engineering_dept_tag]},
+        brian: {name: "Brian", slack_id: "U4SK3RBPS", github_id: "briandragon", tags: [not_available_tag, time_4_tag, management_tag, engineering_dept_tag]},
+        jerico: {name: "Jerico", slack_id: "U4SK3RBPS", github_id: "jericoramirez", tags: [not_available_tag, time_4_tag, qa_tag, engineering_dept_tag]},
+        jig: {name: "Jig", slack_id: "U4SK3RBPS", github_id: "JigFirstCircle", tags: [not_available_tag, time_4_tag, product_tag, engineering_dept_tag]},
+        rj: {name: "RJ", slack_id: "U4SK3RBPS", github_id: "rjomosura", tags: [not_available_tag, time_4_tag, qa_tag, engineering_dept_tag]},
       }
 
       reviewers.each do |reviewer|
@@ -63,6 +65,11 @@ module Plankbot::CodeReview
         "fca",
         "fcc",
         "website",
+        "data-airflow",
+        "data-warehouse",
+        "limits-engine",
+        "data",
+        "engineering",
       ]
 
       labels.each do |key|
@@ -96,7 +103,7 @@ module Plankbot::CodeReview
       expect(Plankbot::Reviewer.find_by_github_id("JigFirstCircle").pull_requests.count).to eq 0
       expect(Plankbot::Reviewer.find_by_github_id("rjomosura").pull_requests.count).to eq 0
 
-      expected_result =[
+      expected_result = [
         {:url=>"https://github.com/carabao-capital/first-circle-app/pull/3450", :reviewers=>[{:name=>"Francis", :approved=>true}, {:name=>"Neil", :approved=>true}]},
         {:url=>"https://github.com/carabao-capital/first-circle-app/pull/3446", :reviewers=>[{:name=>"Jess", :approved=>true}, {:name=>"Earle", :approved=>true}, {:name=>"Neil", :approved=>true}]},
         {:url=>"https://github.com/carabao-capital/first-circle-app/pull/3432", :reviewers=>[{:name=>"Jess", :approved=>true}, {:name=>"Rick", :approved=>true}, {:name=>"Tony", :approved=>false}]},

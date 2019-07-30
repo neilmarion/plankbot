@@ -7,6 +7,7 @@ module Plankbot
       @availability_tags = Tag.where(kind: "availability")
       @time_available_tags = Tag.where(kind: "time_available")
       @team_tags = Tag.where(kind: ["team", "tier"])
+      @department_tags = Tag.where(kind: ["department"])
     end
 
     def update

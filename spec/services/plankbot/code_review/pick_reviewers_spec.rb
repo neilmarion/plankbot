@@ -32,6 +32,12 @@ module Plankbot::CodeReview
     let(:prodeng_tag) do
       Plankbot::Tag.create(name: "prodeng", kind: "team")
     end
+    let(:data_tag) do
+      Plankbot::Tag.create(name: "data", kind: "department")
+    end
+    let(:engineering_tag) do
+      Plankbot::Tag.create(name: "engineering", kind: "department")
+    end
 
     before(:each) do
       Slack::Web::Client.any_instance.stub(:chat_postMessage).and_return true
@@ -40,16 +46,16 @@ module Plankbot::CodeReview
     before(:each) do
       pr_counts = [1, 3, 6, 8, 2, 4, 4, 7, 0, 2]
       tags = [
-        [available_tag, time_1_tag, onboarding_tag],
-        [available_tag, time_1_tag, min_tag],
-        [available_tag, time_1_tag, mout_tag],
-        [available_tag, time_1_tag, prodeng_tag],
-        [not_available_tag, time_1_tag, prodeng_tag],
-        [available_tag, time_1_tag, min_tag],
-        [available_tag, time_2_tag, mout_tag],
-        [available_tag, time_2_tag, prodeng_tag],
-        [available_tag, time_2_tag, min_tag],
-        [available_tag, time_2_tag, min_tag],
+        [available_tag, time_1_tag, onboarding_tag, engineering_tag],
+        [available_tag, time_1_tag, min_tag, engineering_tag],
+        [available_tag, time_1_tag, mout_tag, engineering_tag],
+        [available_tag, time_1_tag, prodeng_tag, engineering_tag],
+        [not_available_tag, time_1_tag, prodeng_tag, engineering_tag],
+        [available_tag, time_1_tag, min_tag, engineering_tag],
+        [available_tag, time_2_tag, mout_tag, engineering_tag],
+        [available_tag, time_2_tag, prodeng_tag, engineering_tag],
+        [available_tag, time_2_tag, min_tag, engineering_tag],
+        [available_tag, time_2_tag, min_tag, engineering_tag],
       ]
 
       10.times.each do |x|
@@ -102,9 +108,17 @@ module Plankbot::CodeReview
       Plankbot::Label.create(name: "min")
     end
 
+    let(:engineering_label) do
+      Plankbot::Label.create(name: "engineering")
+    end
+
+    let(:data_label) do
+      Plankbot::Label.create(name: "data")
+    end
+
     describe OrderReviewersByPullRequestCount do
       specify do
-        ctx = {chosen: [], remaining: [], pull_request: nil}
+        ctx = {chosen: [], remaining: Plankbot::Reviewer.all, pull_request: nil}
         ctx = OrderReviewersByPullRequestCount.execute(ctx)
         expect(ctx[:remaining].map(&:pull_request_count)).
           to eq [0, 0, 0, 1, 2, 3, 4, 4, 6, 7, 8]
@@ -202,6 +216,7 @@ module Plankbot::CodeReview
 
         pull_request.pull_request_label_relationships.create(label: min_label)
         pull_request.pull_request_label_relationships.create(label: review_ready_label)
+        pull_request.pull_request_label_relationships.create(label: engineering_label)
         min_reviewers = Plankbot::Tag.find_by_name(min_label.name).reviewers
 
         ctx = {chosen: [], remaining: Plankbot::Reviewer.all.to_a, pull_request: pull_request, reviewer_count: 2}
@@ -226,6 +241,7 @@ module Plankbot::CodeReview
 
         pull_request.pull_request_label_relationships.create(label: min_label)
         pull_request.pull_request_label_relationships.create(label: review_ready_label)
+        pull_request.pull_request_label_relationships.create(label: engineering_label)
         min_reviewers = Plankbot::Tag.find_by_name(min_label.name).reviewers
 
         ctx = {chosen: [], remaining: Plankbot::Reviewer.all.to_a, pull_request: pull_request, reviewer_count: 2}
@@ -254,6 +270,9 @@ module Plankbot::CodeReview
 
       pull_request.pull_request_label_relationships.
         create(label: onboarding_label)
+
+      pull_request.pull_request_label_relationships.
+        create(label: engineering_label)
 
       allow(Time).to receive(:now).and_return Time.parse("14:00")
 

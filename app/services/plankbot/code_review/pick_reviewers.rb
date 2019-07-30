@@ -10,6 +10,7 @@ module Plankbot
         }
 
         context = InitializeReviewerCount.execute(context)
+        context = FilterByDepartment.execute(context)
         context = OrderReviewersByPullRequestCount.execute(context)
         context = RemoveRequestor.execute(context)
         context = RemoveAssigned.execute(context)

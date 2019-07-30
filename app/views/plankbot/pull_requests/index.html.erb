@@ -26,8 +26,10 @@
         </li>
       <% else %>
         <li class="unapproved-pr">
-          <%= link_to "#{u.title} (by #{u.requestor.name})", u.url %> <%= link_to "edit", edit_pull_request_path(u), {class: "edit"} %><br>
-          <%= u.labels.map{ |x| "##{x.name}" }.join(" ") %><br>
+          <%= link_to "#{u.title} (by #{u.requestor.name})", u.url %> <%= link_to "EDIT", edit_pull_request_path(u), {class: "edit"} %><br>
+          <% u.labels.each do |x| %>
+            <span style="color: <%= Plankbot::Label::COLORS[x.name] %>"><%= "##{x.name}" %></span>
+          <% end %><br>
           <%= u.reviewers.map{ |x| x.name + (u.pull_request_reviewer_relationships.find_by_reviewer_id(x.id).approved_at ? " ✔" : " —") }.join(" ") %>
         </li>
       <% end %>

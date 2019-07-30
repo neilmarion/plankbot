@@ -14,7 +14,9 @@ module Plankbot
           next unless (labels & TRIGGER_LABELS).present?
 
           repo_label = get_repo_label(pr)
+          dept_label = get_repo_dept_label(pr)
           labels << repo_label if repo_label
+          labels << dept_label if dept_label
 
           comments = fetch_comments(pr["comments_url"])
           approvers = comments.map do |comment|
@@ -40,11 +42,21 @@ module Plankbot
       def self.get_repo_label(pr)
         repos = JSON.parse(ENV["PLANKBOT_REPOS"])
 
-        chosen_labels = repos.select do |repo|
-          repo["label"] if pr["url"].match?(Regexp.new(repo["github_repo"]))
+        chosen_repos = repos.select do |repo|
+          pr["url"].match?(Regexp.new(repo["github_repo"]))
         end
 
-        chosen_labels.first[:label] if chosen_labels.present?
+        chosen_repos.first["label"] if chosen_repos.present?
+      end
+
+      def self.get_repo_dept_label(pr)
+        repos = JSON.parse(ENV["PLANKBOT_REPOS"])
+
+        chosen_repos = repos.select do |repo|
+          pr["url"].match?(Regexp.new(repo["github_repo"]))
+        end
+
+        chosen_repos.first["dept"] if chosen_repos.present?
       end
 
       def self.fetch_comments(url)
