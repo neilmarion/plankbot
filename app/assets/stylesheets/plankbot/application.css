@@ -40,13 +40,12 @@ body ol, .reviewer-settings {
   color: white;
 }
 
-.shutdown a.edit, .booted-up a.edit {
-  color: yellow;
+.shutdown a.edit, .booted-up .unapproved-pr a.edit {
+  color: #FFC107;
 }
 
 .booted-up .selected-reviewer,
 .booted-up a,
-.booted-up .unapproved-pr a,
 .booted-up .available-reviewer,
 .booted-up .unapproved-pr {
   color: black;
