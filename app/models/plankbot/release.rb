@@ -4,13 +4,6 @@ module Plankbot
     has_many :release_pull_requests, dependent: :destroy
     after_create :retrieve_and_create_release_prs
 
-    TEAM_SLACK_IDS = {
-      "CJE" => "(PO) <@UFE78H79U>, (Lead) <@U5VFECCPM>, (Eng) <@U4TDX4QSH> <@UJG3JHHEF>, (QA) <@UJSDQ82LB>",
-      "UP" => "(PO) <@U2DHPSA9J>, (Lead) <@UH5GJ1ZKL>, (Eng) <@UKNT1DNCR>, (QA) <@UHJ77HHE2>",
-      "ORIG" => "(PO) <@UC89TQME3>, (Lead) <@U5RT71ZKQ>, (Eng) <@UHGQM9N76>, (QA) <@UKDS7QUJC>",
-      "PFM" => "<@UHECKLPMW> <@U4SK3RBPS>",
-    }
-
     FCC_CLOSED_PULL_REQUESTS = "https://api.github.com/repos/carabao-capital/first-circle-app/pulls?state=closed&access_token=#{ENV["GITHUB_ACCESS_TOKEN"]}"
     FCA_CLOSED_PULL_REQUESTS = "https://api.github.com/repos/carabao-capital/first-circle-account/pulls?state=closed&access_token=#{ENV["GITHUB_ACCESS_TOKEN"]}"
 
@@ -28,7 +21,7 @@ module Plankbot
       begin
         PLANKBOT_SLACK_CLIENT.chat_postMessage(
           channel: ENV["PLANKBOT_RELEASE_NOTES_SLACK_CHANNEL"],
-          text: ":arrow_up: <https://firstcircle.atlassian.net/projects/#{team}/versions/#{jira_id}|#{name}>\ndescription: *#{description}*\nstart: *#{start_date&.strftime("%d-%b-%Y")}*\nrelease: *#{release_date&.strftime("%d-%b-%Y")}*\nteam: *#{TEAM_SLACK_IDS[team]}*\npull requests: #{pull_requests.join(" ")}\n\n#{issues.join("\n")}\n#{issues.count > 14 ? "_...Stories list redacted_" : ""}",
+          text: ":arrow_up: <https://firstcircle.atlassian.net/projects/#{team}/versions/#{jira_id}|#{name}>\ndescription: *#{description}*\nstart: *#{start_date&.strftime("%d-%b-%Y")}*\nrelease: *#{release_date&.strftime("%d-%b-%Y")}*\nteam: *#{JSON.parse(ENV["PLANKBOT_TEAM_SLACK_IDS"])[team]}*\npull requests: #{pull_requests.join(" ")}\n\n#{issues.join("\n")}\n#{issues.count > 14 ? "_...Stories list redacted_" : ""}",
           as_user: true,
         )
       rescue Slack::Web::Api::Errors::SlackError => e
