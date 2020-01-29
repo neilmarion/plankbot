@@ -11,7 +11,7 @@ module Plankbot
       issues = release_issues.map.with_index do |issue, i|
         next if i >= 15
 
-        "#{i+1}) _#{issue.issue_type}_ *#{issue.summary}* <https://firstcircle.atlassian.net/browse/#{issue.key}|jira>"
+        "#{i+1}) _#{issue.issue_type}_ *#{issue.summary}* <https://www.pivotaltracker.com/story/show/#{issue.key}|tracker>"
       end.compact
 
       pull_requests = release_pull_requests.map.with_index do |pr, i|
@@ -21,7 +21,7 @@ module Plankbot
       begin
         PLANKBOT_SLACK_CLIENT.chat_postMessage(
           channel: ENV["PLANKBOT_RELEASE_NOTES_SLACK_CHANNEL"],
-          text: ":arrow_up: <https://firstcircle.atlassian.net/projects/#{team}/versions/#{jira_id}|#{name}>\ndescription: *#{description}*\nstart: *#{start_date&.strftime("%d-%b-%Y")}*\nrelease: *#{release_date&.strftime("%d-%b-%Y")}*\nteam: *#{JSON.parse(ENV["PLANKBOT_TEAM_SLACK_IDS"])[team]}*\npull requests: #{pull_requests.join(" ")}\n\n#{issues.join("\n")}\n#{issues.count > 14 ? "_...Stories list redacted_" : ""}",
+          text: ":arrow_up: <https://www.pivotaltracker.com/story/show/#{jira_id}|#{name}>\ndescription: *#{description}*\nstart: *#{start_date&.strftime("%d-%b-%Y")}*\nrelease: *#{release_date&.strftime("%d-%b-%Y")}*\nteam: *#{JSON.parse(ENV["PLANKBOT_TEAM_SLACK_IDS"])[team]}*\npull requests: #{pull_requests.join(" ")}\n\n#{issues.join("\n")}\n#{issues.count > 14 ? "_...Stories list redacted_" : ""}",
           as_user: true,
         )
       rescue Slack::Web::Api::Errors::SlackError => e

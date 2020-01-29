@@ -1,20 +1,21 @@
 module Plankbot
   class ExtractReleases
-    TEAMS = ["CJE", "ORIG", "UP", "PFM"]
-
     def self.execute
       releases = []
 
-      TEAMS.each do |team|
-        releases = releases + HTTParty.get(
-          "https://firstcircle.atlassian.net/rest/api/3/project/#{team}/versions",
+      project_ids = JSON.parse(ENV["PLANKBOT_PT_PROJECT_IDS"])
+
+      project_ids.keys.each do |project_id|
+        result = HTTParty.get(
+          "https://www.pivotaltracker.com/services/v5/projects/#{project_id}/releases?with_state=accepted",
           headers: {
-            "Authorization" => "Basic #{ENV["PLANKBOT_JIRA_BASIC_AUTH_TOKEN"]}"
+            "X-TrackerToken" => ENV["PLANKBOT_PT_API_SECRET"],
           },
         )
+        releases = releases + JSON.parse(result.body)
       end
 
-      releases
+      releases.flatten
     end
   end
 end
