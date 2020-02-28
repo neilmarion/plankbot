@@ -25,4 +25,15 @@ Plankbot::Engine.routes.draw do
 
   resources :slack, only: [:show, :create]
   resources :reviewers
+
+  resources :test_runs do
+    member do
+      delete :cancel
+    end
+
+    collection do
+      get :status
+      post :run
+    end
+  end
 end

@@ -1,0 +1,20 @@
+<div class="test-runs">
+  <div>
+    <%= "BRANCH: #{@test_run.github_org}/#{@test_run.github_repo}/#{@test_run.github_branch}" %><br>
+    <%= "CIRCLE BUILD ID: #{@test_run.circle_build_id}" %><br>
+    <%= "JOB RUN BY: #{@test_run.github_username}" %><br>
+    <%= "STATUS: #{@test_run.status}" %>
+    <% if @test_run.passed_or_failed? %>
+      <%= link_to "artifacts", "/results/#{@test_run.result_artifacts_id}/report.html" %>
+    <% end %>
+    <br><br>
+    <%= link_to "go back", test_runs_path %>
+    <% if @test_run.show_canceled_button? %>
+      <%= link_to "cancel test", cancel_test_run_path(@test_run.id), {method: :put} %>
+    <% end %>
+    <br><br>
+    <%= "LOGS:<br><br>#{@test_run.log.gsub(/\n/, '<br />')}".html_safe %>
+  </div>
+
+  <br>
+</div>

@@ -19,9 +19,18 @@
 body {
   font-family: 'Roboto Condensed', sans-serif;
   font-family: 'Bree Serif', serif;
+  margin-top: 100px;
+}
+
+.pull-requests {
   margin-left: 500px;
   margin-right: 500px;
-  margin-top: 100px;
+}
+
+.test-runs {
+  margin-left: 50px;
+  margin-right: 50px;
+  text-align: left;
 }
 
 body ol, .reviewer-settings {

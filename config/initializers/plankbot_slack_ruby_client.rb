@@ -9,7 +9,13 @@ end
 Sidekiq::Cron::Job.create({
   name: 'Plankbot::SendWeeklyReleaseNotesWorker',
   cron: '00 16 * * FRI',
-  class: 'Plankbot::SendWeeklyReleaseNotesWorker'
+  class: 'Plankbot::SendWeeklyReleaseNotesWorker',
+})
+
+Sidekiq::Cron::Job.create({
+  name: 'Plankbot::RunTestsWorker',
+  cron: '* * * * *',
+  class: 'Plankbot::RunTestsWorker',
 })
 
 Sidekiq::Cron::Job.create({
