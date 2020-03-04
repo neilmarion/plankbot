@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'slack-ruby-bot'
   s.add_dependency 'faye-websocket', '~> 0.10.2', '> 0.10.2'
   s.add_dependency 'jquery-rails'
+  s.add_dependency 'bamboozled', '0.2.0'
 
   s.add_development_dependency "pg"
 end

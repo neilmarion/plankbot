@@ -59,3 +59,9 @@ Sidekiq::Cron::Job.create({
   cron: '*/5 * * * *',
   class: 'Plankbot::EtlCriticalIssuesWorker'
 })
+
+Sidekiq::Cron::Job.create({
+  name: 'Plankbot::AnnounceBamboohrLeavesWorker',
+  cron: '0 0 * * *',
+  class: 'Plankbot::AnnounceBamboohrLeavesWorker'
+})
