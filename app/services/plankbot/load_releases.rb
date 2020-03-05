@@ -6,7 +6,7 @@ module Plankbot
           name: transformed_release["name"],
           team: transformed_release["team"],
           jira_id: transformed_release["id"],
-          description: transformed_release["name"] || "",
+          description: transformed_release["description"] || "",
           start_date: transformed_release["created_at"],
           release_date: transformed_release["accepted_at"],
         })
