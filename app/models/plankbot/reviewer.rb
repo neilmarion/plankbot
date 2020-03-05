@@ -34,6 +34,12 @@ module Plankbot
       through: :approved_pull_request_reviewer_relationships
     }
 
+    has_many :attendances, {
+      primary_key: :id,
+      foreign_key: :requestor_id,
+      class_name: "Attendance",
+    }
+
     scope :available, -> { where(available: true) }
     scope :unavailable, -> { where(available: false) }
 

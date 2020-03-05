@@ -61,7 +61,13 @@ Sidekiq::Cron::Job.create({
 })
 
 Sidekiq::Cron::Job.create({
-  name: 'Plankbot::AnnounceBamboohrLeavesWorker',
-  cron: '0 0 * * *',
-  class: 'Plankbot::AnnounceBamboohrLeavesWorker'
+  name: 'Plankbot::EtlAndAnnounceBamboohrAttendancesStartWorker',
+  cron: '0 6 * * *',
+  class: 'Plankbot::EtlAndAnnounceBamboohrAttendancesStartWorker'
+})
+
+Sidekiq::Cron::Job.create({
+  name: 'Plankbot::EtlAndAnnounceBamboohrAttendancesNotStartWorker',
+  cron: '0 * * * *',
+  class: 'Plankbot::EtlAndAnnounceBamboohrAttendancesNotStartWorker'
 })

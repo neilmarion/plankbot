@@ -6,7 +6,6 @@ module Plankbot
       date_now = (DateTime.now + 8.hours).to_date.to_s
 
       client = Bamboozled.client(subdomain: "firstcircle", api_key: ENV["BAMBOOHR_API_KEY"])
-      employees = client.employee.all
 
       eng_employees = Plankbot::Reviewer.where.not(bamboohr_id: nil).inject({}) do |hash, reviewer|
         team = reviewer.tags.where(kind: "team").first&.name
