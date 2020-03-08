@@ -31,7 +31,7 @@ module Plankbot
         begin
           PLANKBOT_SLACK_CLIENT.chat_postMessage(
             channel: channel,
-            text:  selected.map.with_index{|a| "#{icon(a.kind)} #{a.requestor.name} requested a short notice OOO _(#{a.kind} - #{a.note})_" }.join("\n"),
+            text:  selected.map.with_index{|a| "#{icon(a.kind)} <#{ENV["PLANKBOT_HOST"]}/reviewers/#{a.requestor.id}/attendances|#{a.requestor.name}> requested a short notice OOO _(#{a.kind} - #{a.note})_" }.join("\n"),
             as_user: true,
           )
         rescue Slack::Web::Api::Errors::SlackError => e

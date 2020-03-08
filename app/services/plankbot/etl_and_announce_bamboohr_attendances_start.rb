@@ -17,13 +17,13 @@ module Plankbot
       slack_channels.each do |k, channel|
         selected, heading = case k
         when "all"
-          [attendances, "*These are the engineers out of office today (#{date_now}):*"]
+          [attendances, "*These are the engineers out of office today (#{date_now}):* <#{ENV["PLANKBOT_HOST"]}/attendances?date=#{date_now}|details>"]
         else
           s = attendances.select do |attendance|
             attendance.requestor.tags.where(kind: "team").exists?(name: k)
           end
 
-          [s, "*These are the engineers out of office today for this team (#{date_now}):*"]
+          [s, "*These are the engineers out of office today for this team (#{date_now}):* <#{ENV["PLANKBOT_HOST"]}/attendances?date=#{date_now}|details>"]
         end
 
         next if selected.blank?
@@ -31,7 +31,7 @@ module Plankbot
         begin
           PLANKBOT_SLACK_CLIENT.chat_postMessage(
             channel: channel,
-            text:  heading + "\n" + selected.map.with_index{|a, i| "#{icon(a.kind)} #{i+1}) #{a.requestor.name} _(#{a.kind} - #{a.note})_" }.join("\n"),
+            text:  heading + "\n" + selected.map.with_index{|a, i| "#{icon(a.kind)} #{i+1}) <#{ENV["PLANKBOT_HOST"]}/reviewers/#{a.requestor.id}/attendances|#{a.requestor.name}> _(#{a.kind} - #{a.note})_" }.join("\n"),
             as_user: true,
           )
         rescue Slack::Web::Api::Errors::SlackError => e

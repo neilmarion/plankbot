@@ -1,0 +1,16 @@
+<h1><%= @reviewer.name %></h1>
+
+<%= month_calendar do |date| %>
+  <%= date %><br>
+  <hr>
+  <% attendance_kind = @attendances.find_by(date: date)&.kind %>
+  <% if date > @current_date || date.to_s < "2020-03-01" || date.saturday? || date.sunday? %>
+    <%= "<br>".html_safe %>
+  <% else %>
+    <% if attendance_kind.blank? %>
+      <div><%= "in office" %></div>
+    <% else %>
+      <div class="ooo"><%= attendance_kind.blank? ? "in office" : attendance_kind %></div>
+    <% end %>
+  <% end %>
+<% end %>
