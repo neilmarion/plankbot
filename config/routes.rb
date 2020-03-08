@@ -23,6 +23,9 @@ Plankbot::Engine.routes.draw do
     end
   end
 
+  resources :attendances, only: [:index]
   resources :slack, only: [:show, :create]
-  resources :reviewers
+  resources :reviewers do
+    resources :attendances, controller: "reviewers/attendances", only: [:index]
+  end
 end

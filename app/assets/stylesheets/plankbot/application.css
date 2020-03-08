@@ -70,3 +70,41 @@ body ol, .reviewer-settings {
 .shutdown .unapproved-pr {
   color: white;
 }
+
+.simple-calendar .calendar-heading {
+  margin-bottom: 30px;
+}
+
+.simple-calendar .table tr td.day {
+  padding: 10px;
+}
+
+.simple-calendar .ooo {
+  background: #d35400;
+}
+
+.simple-calendar .today {
+  background: #2ecc71;
+}
+
+.simple-calendar .future {
+  color: grey;
+}
+
+.simple-calendar .future hr {
+  border-color: grey;
+}
+
+.attendances .name {
+  width: 50%;
+  text-align: right;
+}
+
+.attendances .kind {
+  width: 50%;
+  text-align: left;
+}
+
+.attendances .kind.ooo {
+  color: #d35400;
+}

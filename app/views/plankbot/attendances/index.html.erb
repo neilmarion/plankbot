@@ -1,0 +1,14 @@
+<div>
+  <h1><%= link_to "<<", attendances_path(date: @date.yesterday) %> <%= @date %> <%= link_to ">>", attendances_path(date: @date.tomorrow) %></h1>
+</div>
+
+<table class="attendances">
+  <% @attendances.each do |id, value| %>
+    <tr>
+      <td class="name"><%= link_to value[:name], reviewer_attendances_path(id) %></td>
+      <td> | </td>
+      <td class="kind <%= value[:ooo] ? "ooo" : "" %>"><%= "#{value[:kind]} - #{value[:note][0..30]}" %></td>
+    </tr>
+  <% end %>
+</table>
+
