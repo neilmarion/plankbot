@@ -2,7 +2,7 @@
 
 <%= month_calendar do |date| %>
   <%= date %><br>
-  <hr>
+  <hr noshade>
   <% attendance_kind = @attendances.find_by(date: date)&.kind %>
   <% if date > @current_date || date.to_s < "2020-03-01" || date.saturday? || date.sunday? %>
     <%= "<br>".html_safe %>

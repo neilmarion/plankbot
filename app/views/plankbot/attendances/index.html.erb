@@ -1,5 +1,6 @@
 <div>
   <h1><%= link_to "<<", attendances_path(date: @date.yesterday) %> <%= @date %> <%= link_to ">>", attendances_path(date: @date.tomorrow) %></h1>
+  <h1><%= @date.strftime("%A") %></h1>
 </div>
 
 <table class="attendances">

@@ -2,8 +2,9 @@ require 'bamboozled'
 
 module Plankbot
   class EtlBamboohrAttendances
-    def execute
-      date_now = (DateTime.now + 8.hours).to_date.to_s
+    def execute(date=nil)
+      date_now = date || (DateTime.now + 8.hours).to_date.to_s
+
       extracted_requests = extract(date_now)
       transformed_requests = transform(extracted_requests)
       lod(transformed_requests, date_now)

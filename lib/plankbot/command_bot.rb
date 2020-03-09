@@ -64,6 +64,22 @@ module Plankbot
       client.say(channel: data.channel, text: text)
     end
 
+    command 'announce' do |client, data, match|
+      begin
+        exp = match["expression"]
+        array = exp.split(" ")
+
+        datetime_string = array.first
+        person = array.second
+        message = array[2..array.length-1].join(" ")
+
+        Plankbot::AnnouncementWorker.perform_at(DateTime.parse(datetime_string) - 8.hours, person, message)
+        client.say(channel: data.channel, text: "Message now queued")
+      rescue Exception => e
+        client.say(channel: data.channel, text: "Something went wrong")
+      end
+    end
+
     command 'help' do |client, data, match|
       text = "- `redeploy (fca|fcc) (prod|preprod)` to redeploy Cloud66 instance\n" +
       text = "- `showenvs` to show stack environments\n" +
