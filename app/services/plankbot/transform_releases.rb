@@ -5,17 +5,27 @@ module Plankbot
         next if Release.where(jira_id: release["id"]).exists?
 
         result = HTTParty.get(
-          "https://www.pivotaltracker.com/services/v5/projects/#{release["project_id"]}/releases/#{release["id"]}/stories",
+          "https://www.pivotaltracker.com/services/v5/projects/#{release["project_id"]}/stories/#{release["id"]}/blockers",
           headers: {
             "X-TrackerToken" => ENV["PLANKBOT_PT_API_SECRET"],
           },
         )
 
         teams = JSON.parse(ENV["PLANKBOT_PT_PROJECT_IDS"])
-
-        issues = JSON.parse(result.body)
+        blockers = JSON.parse(result.body)
         release["team"] = teams[release["project_id"].to_s]
-        release["issues"] = issues.map do |issue|
+        release["issues"] = blockers.map do |blocker|
+          story_id = blocker["description"].scan(/\d/).join
+
+          result = HTTParty.get(
+            "https://www.pivotaltracker.com/services/v5/projects/#{release["project_id"]}/stories/#{story_id}",
+            headers: {
+              "X-TrackerToken" => ENV["PLANKBOT_PT_API_SECRET"],
+            },
+          )
+
+          issue = JSON.parse(result.body)
+
           {
             summary: issue["name"],
             jira_id: issue["id"],
