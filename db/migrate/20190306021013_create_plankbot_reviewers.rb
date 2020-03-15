@@ -5,6 +5,7 @@ class CreatePlankbotReviewers < ActiveRecord::Migration[5.0]
       t.string :slack_id
       t.string :github_id
       t.boolean :available
+      t.string :bamboohr_id
 
       t.timestamps
     end
