@@ -40,6 +40,12 @@ module Plankbot
       class_name: "Attendance",
     }
 
+    has_many :presences, {
+      primary_key: :id,
+      foreign_key: :requestor_id,
+      class_name: "Presence",
+    }
+
     scope :available, -> { where(available: true) }
     scope :unavailable, -> { where(available: false) }
 
@@ -69,6 +75,31 @@ module Plankbot
         where(kind: "availability").
         pluck(:name).
         include? CodeReview::FilterByAvailability::YES_TAG
+    end
+
+    def online_in_slack?(date)
+      presence = presences.where(kind: "slack").last
+      return false unless presence
+      return false if date != (presence.from).to_date
+
+      presence.is_online
+    end
+
+    def signed_in?(date)
+      presence = presences.where(kind: "plankbot").last
+      return false unless presence
+      return false if date != (presence.from).to_date
+
+      presence.is_online
+    end
+
+    def attendance(date)
+      return "Weekend" if date.saturday? || date.sunday?
+      attendances.find_by(date: date)&.kind&.downcase || "Office"
+    end
+
+    def department
+      tags.find_by(kind: "department")&.name
     end
   end
 end

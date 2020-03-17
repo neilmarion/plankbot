@@ -77,3 +77,9 @@ Sidekiq::Cron::Job.create({
   cron: '0 18 * * *',
   class: 'Plankbot::SendRemoteReminderWorker'
 })
+
+Sidekiq::Cron::Job.create({
+  name: 'Plankbot::EtlSlackPresenceServiceWorker',
+  cron: '*/1 * * * *',
+  class: 'Plankbot::EtlSlackPresenceServiceWorker'
+})

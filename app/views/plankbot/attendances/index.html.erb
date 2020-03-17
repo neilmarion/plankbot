@@ -3,13 +3,23 @@
   <h1><%= @date.strftime("%A") %></h1>
 </div>
 
-<table class="attendances">
-  <% @attendances.each do |id, value| %>
-    <tr>
-      <td class="name"><%= link_to value[:name], reviewer_attendances_path(id) %></td>
-      <td> | </td>
-      <td class="kind <%= value[:ooo] ? "ooo" : "" %>"><%= "#{value[:kind]} - #{value[:note][0..30]}" %></td>
-    </tr>
+<div class="attendances">
+  <% @employees.each do |employee| %>
+    <%= link_to reviewer_attendances_path(employee.id), class: "card" do %>
+        <div class="container title <%= employee.signed_in?(@date) ? "signed-in" : "signed-out" %>">
+          <div><%= employee.name %> <%= employee.signed_in?(@date) ? "(IN)" : "(OUT)"%></div>
+        </div>
+        <div class="container title <%= employee.department %> <%= employee.signed_in?(@date) ? "signed-in" : "signed-out" %>">
+          <div><%= employee.department %></div>
+        </div>
+        <img src="<%= employee.photo %>" alt="Avatar" class="attendance-photo <%= employee.signed_in?(@date) ? "signed-in" : "signed-out" %>">
+        <div class="container title attendance <%= employee.attendance(@date).downcase %> <%= employee.signed_in?(@date) ? "signed-in" : "signed-out" %>">
+          <%= "#{employee.attendance(@date).humanize}" %>
+        </div>
+        <div class="container title slack">
+          <span class="dot <%= employee.online_in_slack?(@date) ? "online" : "offline" %>"></span>&nbsp;
+          <span>Slack</span>
+        </div>
+    <% end %>
   <% end %>
-</table>
-
+</div>

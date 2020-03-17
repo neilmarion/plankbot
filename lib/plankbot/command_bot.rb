@@ -80,6 +80,48 @@ module Plankbot
       end
     end
 
+    command 'in' do |client, data, match|
+      begin
+        note = match["expression"]
+
+        result = Plankbot::TogglePresenceService.new({
+          slack_id: data.user,
+          status: "online",
+          note: note,
+          kind: "plankbot",
+        }).execute
+
+        if result == true
+          client.say(channel: data.channel, text: "You have signed-in")
+        else
+          client.say(channel: data.channel, text: "You cannot sign-in again since you already are.")
+        end
+      rescue Exception => e
+        client.say(channel: data.channel, text: "Something went wrong")
+      end
+    end
+
+    command 'out' do |client, data, match|
+      begin
+        note = match["expression"]
+
+        result = Plankbot::TogglePresenceService.new({
+          slack_id: data.user,
+          status: "offline",
+          note: note,
+          kind: "plankbot",
+        }).execute
+
+        if result == true
+          client.say(channel: data.channel, text: "You have signed-out")
+        else
+          client.say(channel: data.channel, text: "You cannot sign-out again since you already are.")
+        end
+      rescue Exception => e
+        client.say(channel: data.channel, text: "Something went wrong")
+      end
+    end
+
     command 'help' do |client, data, match|
       text = "- `redeploy (fca|fcc) (prod|preprod)` to redeploy Cloud66 instance\n" +
       text = "- `showenvs` to show stack environments\n" +

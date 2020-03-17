@@ -17,13 +17,13 @@ module Plankbot
       slack_channels.each do |k, channel|
         selected, heading = case k
         when "all"
-          [attendances, "*These are the engineers out of office today (#{date_now}):* <#{ENV["PLANKBOT_HOST"]}/attendances?date=#{date_now}|details>"]
+          [attendances, "*These are the people out of office today (#{date_now}):* <#{ENV["PLANKBOT_HOST"]}/attendances?date=#{date_now}|details>"]
         else
           s = attendances.select do |attendance|
             attendance.requestor.tags.where(kind: "team").exists?(name: k)
           end
 
-          [s, "*These are the engineers out of office today for this team (#{date_now}):* <#{ENV["PLANKBOT_HOST"]}/attendances?date=#{date_now}|details>"]
+          [s, "*These are the people out of office today for this team (#{date_now}):* <#{ENV["PLANKBOT_HOST"]}/attendances?date=#{date_now}|details>"]
         end
 
         next if selected.blank?
