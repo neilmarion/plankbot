@@ -25,6 +25,8 @@ module Plankbot
           )
 
           issue = JSON.parse(result.body)
+          next if !issue.is_a? Hash
+          next if issue["id"].blank?
 
           {
             summary: issue["name"],
@@ -33,7 +35,7 @@ module Plankbot
             key: issue["id"],
             current_state: issue["current_state"],
           }
-        end
+        end.compact
 
         next if release["issues"].blank?
 
