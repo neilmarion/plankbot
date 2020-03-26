@@ -6,6 +6,8 @@ module Plankbot
           get(rv.github_api_endpoint + "?access_token=#{ENV["GITHUB_ACCESS_TOKEN"]}")
         version = response.parsed_response.first
 
+        next unless version
+
         if version["name"] != rv.version
           rv.update_attributes(version: version["name"])
 
