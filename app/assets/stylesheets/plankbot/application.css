@@ -214,6 +214,11 @@ body ol, .reviewer-settings {
   text-align: left;
 }
 
+.container.time {
+  text-align: left;
+  background-color: #ecf0f1;
+}
+
 .slack-status {
   font-size: 20px;
 }

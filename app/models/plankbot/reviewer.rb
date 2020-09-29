@@ -93,6 +93,30 @@ module Plankbot
       presence.is_online
     end
 
+    def total_time_in_today
+      sum_in_sec = 0
+      presences_today.map do |p|
+        sum_in_sec = sum_in_sec + ((p.to || Time.current) - p.from)
+      end
+      seconds_to_hms(sum_in_sec)
+    end
+
+    def seconds_to_hms(sec)
+      "%02d:%02d:%02d" % [sec / 3600, sec / 60 % 60, sec % 60]
+    end
+
+    def signed_in_time
+      presences_today.first&.from&.strftime("%H:%M")
+    end
+
+    def signed_out_time
+      presences_today.last&.to&.strftime("%H:%M")
+    end
+
+    def presences_today
+      presences.where(kind: 'plankbot', is_online: true, created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).order(:created_at)
+    end
+
     def attendance(date)
       return "Weekend" if date.saturday? || date.sunday?
       attendances.find_by(date: date)&.kind&.downcase || "Office"
