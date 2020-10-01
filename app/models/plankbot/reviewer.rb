@@ -128,7 +128,6 @@ module Plankbot
     end
 
     def presence_ranges(date)
-      current_time = Time.current
       signed_in_time = presences_today(date).first&.from
       return [{ percentage: 100, status: 'remaining' }] unless signed_in_time
 
@@ -136,6 +135,7 @@ module Plankbot
 
       remaining = 8.hours.to_i - secs
 
+      current_time = Time.current.to_date == date ? Time.current : signed_in_time + secs + remaining
       end_time = if remaining.positive?
         current_time + remaining
       else
