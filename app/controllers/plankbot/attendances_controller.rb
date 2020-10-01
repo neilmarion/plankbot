@@ -1,7 +1,7 @@
 module Plankbot
   class AttendancesController < ApplicationController
     def index
-      current_date = (DateTime.now + 8.hours).to_date
+      current_date = Time.current.to_date
       @date = params[:date]&.to_date || current_date
 
       @employees = Reviewer.where.not(bamboohr_id: nil)

@@ -17,9 +17,9 @@
           <%= "#{employee.attendance(@date).humanize}" %>
         </div>
         <div class="container title time">
-          <% if employee.signed_in_time %>
-            <div><%= employee.signed_in_time %> - <%= employee.signed_out_time || '?' %></div>
-            <div>(<%= employee.total_time_in_today %>)</div>
+          <% if employee.signed_in_time(@date) %>
+            <div><%= employee.signed_in_time(@date) %> - <%= employee.signed_out_time(@date) || '?' %></div>
+            <div>(<%= employee.total_time_in_today(@date) %>)</div>
           <% else %>
             <div>Haven't signed in.</div>
             <div>(00:00:00)</div>
