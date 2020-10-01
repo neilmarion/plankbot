@@ -149,8 +149,8 @@ module Plankbot
       result = pcs.each_with_object([]) do |pcs, arr|
         s = (pcs.to || current_time) - pcs.from
         percentage = (s.to_f / span_secs.to_f) * 100.00
-        next if percentage >= 100.00 || percentage.negative?
-        arr << { percentage: percentage, status: pcs.is_online ? 'in' : 'out' }
+        next if percentage.negative?
+        arr << { percentage: [percentage, 100].min, status: pcs.is_online ? 'in' : 'out' }
       end.compact
 
       return [{ percentage: 100, status: 'remaining' }] if result.blank?
