@@ -92,7 +92,7 @@ module Plankbot
         }).execute
 
         if result == true
-          client.say(channel: data.channel, text: "You have signed-in")
+          client.say(channel: data.channel, text: "You have signed-in.\n_<Check your hours|https://plankbot.firstcircle.ph/attendances>. Please avoid overworking. Remember to always have balance in your life. :woman_in_lotus_position:_\n")
         else
           client.say(channel: data.channel, text: "You cannot sign-in again since you already are.")
         end

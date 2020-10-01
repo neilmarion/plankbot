@@ -153,18 +153,13 @@ module Plankbot
         arr << { percentage: percentage, status: pcs.is_online ? 'in' : 'out' }
       end.compact
 
-      return [{ percentage: 100, status: 'remaining' }] unless result
+      return [{ percentage: 100, status: 'remaining' }] if result.blank?
 
       if result.first[:status] == 'out'
         result = result.drop(1)
       end
 
-      if current_time == end_time
-        result << { percentage: 1, status: 'now' }
-      end
-      result << { percentage: (((end_time - current_time).to_f / span_secs.to_f) * 100.00) - 1, status: 'remaining' }
-
-      result
+      result << { percentage: ((end_time - current_time).to_f / span_secs.to_f) * 100.00, status: 'remaining' }
     end
   end
 end
