@@ -112,8 +112,11 @@ module Plankbot
           kind: "plankbot",
         }).execute
 
+        employee = Plankbot::Reviewer.find_by(slack_id: data.user)
+        total_time_in_today = employee.total_time_in_today(Time.current)
+
         if result == true
-          client.say(channel: data.channel, text: "You have signed-out")
+          client.say(channel: data.channel, text: "You have signed-out.\n_Total time in today is #{total_time_in_today}._")
         else
           client.say(channel: data.channel, text: "You cannot sign-out again since you already are.")
         end
