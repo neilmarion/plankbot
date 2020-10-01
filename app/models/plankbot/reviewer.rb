@@ -93,15 +93,16 @@ module Plankbot
       presence.is_online
     end
 
-    def total_time_in_today(date)
+    def total_time_in_today_secs(date)
       sum_in_sec = 0
       presences_today(date).map do |p|
         sum_in_sec = sum_in_sec + ((p.to || Time.current) - p.from)
       end
-      seconds_to_hms(sum_in_sec)
+      sum_in_sec
     end
 
-    def seconds_to_hms(sec)
+    def total_time_in_today_readable(date)
+      sec = total_time_in_today_secs(date)
       "%02d:%02d:%02d" % [sec / 3600, sec / 60 % 60, sec % 60]
     end
 
@@ -124,6 +125,33 @@ module Plankbot
 
     def department
       tags.find_by(kind: "department")&.name
+    end
+
+    def presence_ranges(date)
+      current_time = Time.current
+      signed_in_time = presences_today(date).first&.from
+      return [{ percentage: 100, status: 'remaining' }] unless signed_in_time
+
+      secs = total_time_in_today_secs(date)
+
+      remaining = 8.hours.to_i - secs
+
+      end_time = if remaining.positive?
+        current_time + remaining
+      else
+        current_time
+      end
+
+      span_secs = end_time - signed_in_time
+
+      pcs = presences.where(kind: 'plankbot', created_at: date.beginning_of_day..date.end_of_day).order(:created_at)
+
+      result = pcs.each_with_object([]) do |pcs, arr|
+        s = (pcs.to || current_time) - pcs.from
+        arr << { percentage: (s.to_f / span_secs.to_f) * 100.00, status: pcs.is_online ? 'in' : 'out' }
+      end
+
+      result << { percentage: ((end_time - current_time).to_f / span_secs.to_f) * 100.00, status: 'remaining' }
     end
   end
 end

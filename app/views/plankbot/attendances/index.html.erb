@@ -19,10 +19,27 @@
         <div class="container title time">
           <% if employee.signed_in_time(@date) %>
             <div><%= employee.signed_in_time(@date) %> - <%= employee.signed_out_time(@date) || '?' %></div>
-            <div>(<%= employee.total_time_in_today(@date) %>)</div>
+            <div>(<%= employee.total_time_in_today_readable(@date) %>)</div>
           <% else %>
             <div>Haven't signed in.</div>
             <div>(00:00:00)</div>
+          <% end %>
+        </div>
+        <div style='display:table; table-layout: fixed; width: 100%; padding: 0'>
+          <% employee.presence_ranges(@date).each do |presence| %>
+
+            <% color = case presence[:status] %>
+            <% when 'in' %>
+            <% '#2ecc71' %>
+            <% when 'out' %>
+            <% '#ecf0f1' %>
+            <% when 'remaining' %>
+            <% '#e74c3c' %>
+            <% end %>
+
+            <div style='background-color:<%= color %>; width:<%= presence[:percentage] %>%; display: table-cell'>
+              <span style='font-size:1px'>&nbsp</p>
+            </div>
           <% end %>
         </div>
         <div class="container title slack">

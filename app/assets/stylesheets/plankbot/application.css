@@ -198,6 +198,10 @@ body ol, .reviewer-settings {
   background-color: #9b59b6;
 }
 
+.container.attendance.office {
+  background-color: #3498db;
+}
+
 .container.attendance.remote.signed-out {
   background-color: #d5bcdf;
 }
