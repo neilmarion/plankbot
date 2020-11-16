@@ -92,7 +92,7 @@ module Plankbot
         }).execute
 
         if result == true
-          client.say(channel: data.channel, text: "You have signed-in.\n_<https://plankbot.firstcircle.ph/attendances|Check your hours>. Please avoid overworking. Remember to always have balance in your life. :woman_in_lotus_position:_\n")
+          client.say(channel: data.channel, text: "You have signed-in. Please avoid overworking. Remember to always have balance in your life. :woman_in_lotus_position:_\n")
         else
           client.say(channel: data.channel, text: "You cannot sign-in again since you already are.")
         end
@@ -116,7 +116,7 @@ module Plankbot
         total_time_in_today = employee.total_time_in_today_readable(Time.current)
 
         if result == true
-          client.say(channel: data.channel, text: "You have signed-out.\n_Total time in today is #{total_time_in_today}._")
+          client.say(channel: data.channel, text: "You have signed-out.")
         else
           client.say(channel: data.channel, text: "You cannot sign-out again since you already are.")
         end
